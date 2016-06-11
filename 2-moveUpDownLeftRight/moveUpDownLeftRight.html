@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>moving box</title>
+    <style type="text/css">
+    body {
+        position: relative;
+    }
+    
+    #test {
+        position: absolute;
+        left: 200px;
+        top: 200px;
+        width: 20px;
+        height: 20px;
+        background: red;
+    }
+    </style>
+</head>
+
+<body>
+<div class="instruction">在键盘上按 W / S / A / D ，可以控制红色方块上下左右移动</div>
+    <div id="test"></div>
+    <script type="text/javascript">
+    var div = document.getElementById('test');
+    div.style.transform = "translate(0px, 0px)";
+    var moveV = 0,
+        moveH = 0;
+    window.onkeypress = function(event) {
+        if (String.fromCharCode(event.keyCode) == "w") {
+            if (moveV < -200) {
+                moveV = -200;
+            }
+            moveV -= 10;
+            div.style.transform = "translate(" + moveH + "px," + moveV + "px)";
+        } else if (String.fromCharCode(event.keyCode) == "s") {
+            moveV += 10;
+            div.style.transform = "translate(" + moveH + "px," + moveV + "px)";
+        } else if (String.fromCharCode(event.keyCode) == "a") {
+        	if (moveH < -200) {
+                moveH = -200;
+            }
+            moveH -= 10;
+            div.style.transform = "translate(" + moveH + "px," + moveV + "px)";
+        } else if (String.fromCharCode(event.keyCode) == "d") {
+            moveH += 10;
+            div.style.transform = "translate(" + moveH + "px," + moveV + "px)";
+        }
+        // console.log(div.style.transform);
+    };
+    </script>
+</body>
+
+</html>

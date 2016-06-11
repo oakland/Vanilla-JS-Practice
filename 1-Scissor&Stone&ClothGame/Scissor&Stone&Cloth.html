@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>剪刀石头布</title>
+    <style type="text/css">
+    div.display {
+        width: 100px;
+        height: 100px;
+        background: orange;
+        display: inline-block;
+        text-align: center;
+        line-height: 100px;
+        overflow: hidden;
+    }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+        var scissor = document.getElementById('scissor'),
+            tools = document.getElementById('tools'),
+            peopleDisplay = document.getElementById('peopleDisplay'),
+            computerDisplay = document.getElementById('computerDisplay'),
+            result = document.getElementById('result'),
+            finalres = document.getElementById('finalres');
+
+        //将对应的汉字转化成数字
+        function HTMLTonum(str) {
+            switch (str) {
+                case "剪刀":
+                    return 1;
+                    break;
+                case "石头":
+                    return 2;
+                    break;
+                case "布":
+                    return 3;
+                    break;
+            }
+        }
+
+        //声明变量
+        var i = 0, //定义 for 遍历初始值
+            len = tools.getElementsByTagName('input').length, //获取 input 元素数量，供 for 遍历使用
+            total = 0, //共玩多少局
+            winNum = 0, //赢多少局
+            evenNum = 0, //平多少局
+            loseNum = 0; //输多少局
+
+        //处理点击事件
+        for (i; i < len; i++) {
+            (function(i) {
+                //点击button 的时候可以获取 button 的 value ，并展示在 display 上面
+                tools.getElementsByTagName('input')[i].onclick = function(event) {
+                    //获取点击时 button 的值，将其显示在 peopleDisplay 上面
+                    peopleDisplay.innerHTML = this.value;
+                    //获取 1~3 中的任意整数，并将之转化成汉字，并显示在 computerDisplay 上面
+                    var random = Math.floor(Math.random() * 3 + 1);
+                    switch (random) {
+                        case 1:
+                            computerDisplay.innerHTML = "剪刀";
+                            break;
+                        case 2:
+                            computerDisplay.innerHTML = "石头";
+                            break;
+                        case 3:
+                            computerDisplay.innerHTML = "布";
+                            break;
+                    }
+                    //获取左边的 innerHTML 和右边的 innerHTML，将 innerHTML 转化成对应的数字
+                    var leftNum = HTMLTonum(this.value),
+                        rightNum = HTMLTonum(computerDisplay.innerHTML);
+                    //比较 leftNum 和 rightNum，进行判断，将结果写入到 result 中
+                    switch (leftNum - rightNum) {
+                        case 1:
+                        case -2:
+                            result.innerHTML = "本次结果你赢了，恭喜！";
+                            winNum++;
+                            break;
+                        case -1:
+                        case 2:
+                            result.innerHTML = "本次结果你输了，继续努力！";
+                            evenNum++;
+                            break;
+                        case 0:
+                            result.innerHTML = "本次结果你打平，再来一局！";
+                            loseNum++;
+                            break;
+                    }
+
+                    //点击一次，共玩多少局就增加一次
+                    finalres.getElementsByTagName('span')[0].innerHTML = (++total);
+                    //如果赢，则 winNum 增加一次并显示
+                    finalres.getElementsByTagName('span')[1].innerHTML = winNum;
+                    //如果平，则 evenNum 增加一次并显示
+                    finalres.getElementsByTagName('span')[2].innerHTML = evenNum;
+                    //如果输，则 loseNum 增加一次并显示
+                    finalres.getElementsByTagName('span')[3].innerHTML = loseNum;
+
+                }; //onclick 事件处理结束
+            })(i)
+        }
+    }; //window.onload 事件处理器结束
+    </script>
+</head>
+
+<body>
+    <div id="peopleDisplay" class="display"></div>
+    <span>VS</span>
+    <div id="computerDisplay" class="display"></div>
+    <div id="tools">
+        <input type="button" value="剪刀" id="scissor">
+        <input type="button" value="石头" id="stone">
+        <input type="button" value="布" id="cloth">
+    </div>
+    <p id="result">本次结果</p>
+    <p id="finalres">共玩<span></span>局，赢<span></span>局，平<span></span>局，输<span></span>局</p>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>tab</title>
+    <style type="text/css">
+    ul {
+        margin: 0 0 -1px 4px;
+        padding: 0;
+    }
+    
+    ul li {
+        width: 50px;
+        height: 20px;
+        background: #ddd;
+        list-style: none;
+        display: inline-block;
+        margin-left: -4px;
+        text-align: center;
+        line-height: 20px;
+    }
+    
+    ul li.active {
+        background: #bbb;
+        border: 1px solid #000;
+    }
+    
+    div#container div {
+        width: 500px;
+        background-color: #eee;
+        display: none;
+        overflow: hidden;
+    }
+    
+    div img {
+        width: 100%;
+    }
+    
+    div#container div.dis {
+        display: block;
+    }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+        var hList = document.getElementById('headList').getElementsByTagName('li'),
+            divs = document.getElementById('container').getElementsByTagName('div');
+        for (var i = 0, len = hList.length; i < len; i++) {
+            (function(i) {
+                hList[i].onmouseover = function(event) {
+                    for (var j = 0, length = hList.length; j < length; j++) {
+                        hList[j].className = "";
+                        divs[j].className = "";
+                    }
+                    this.className = "active"
+                    divs[i].className = "dis";
+
+                    //如果想要延迟效果的话，就用下面的代码
+                    // var that = this;
+                    //    setTimeout(function() {
+                    //        for (var j = 0, length = hList.length; j < length; j++) {
+                    //            hList[j].className = "";
+                    //            divs[j].className = "";
+                    //        }
+                    //        that.className = "active"
+                    //        divs[i].className = "dis";
+                    //    }, 200);
+                };
+            })(i); //通过闭包实现每次传入一个参数
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <ul id="headList">
+        <li class="active">体育</li>
+        <li class="">文化</li>
+        <li class="">互联网</li>
+    </ul>
+    <div id="container">
+        <div class="dis"><img src="football.jpg" alt=""></div>
+        <div class=""><img src="culture.jpg" alt=""></div>
+        <div class=""><img src="internet.jpg" alt=""></div>
+    </div>
+</body>
+
+</html>

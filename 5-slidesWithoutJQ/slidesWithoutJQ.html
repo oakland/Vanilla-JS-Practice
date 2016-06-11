@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>`slidesWithoutJQ</title>
+	<style type="text/css">
+		#slides {
+			height: 300px;
+			position: relative;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		.slide {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			z-index: 1;
+			transition: opacity 0.5s;
+			/*下面的属于非必须属性*/
+			text-align: center;
+			font-size: 50px;
+			color: #fff;
+			line-height: 300px;
+		}
+		.showing {
+			opacity: 1;
+			z-index: 2;
+		}
+
+		.slide:nth-child(1) {
+			background-color: red;
+		}
+		.slide:nth-child(2) {
+			background-color: orange;
+		}
+		.slide:nth-child(3) {
+			background-color: green;
+		}
+		.slide:nth-child(4) {
+			background-color: blue;
+		}
+		.slide:nth-child(5) {
+			background-color: purple;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function() {
+			var slides = document.querySelectorAll(".slide"),
+				index = 0,
+				pauseBtn = document.getElementById('pause'),
+				playing = true;
+			var slideInterval = setInterval(nextSlide, 1000);
+			function nextSlide () {
+				slides[index].className = "slide";
+				index = (index+1)%slides.length;
+				slides[index].className = "slide showing";
+			}
+			pauseBtn.onclick = function() {
+				if (playing) {
+					pauseSlideShow();
+				} else {
+					playSlideShow();
+				}
+			};
+			function pauseSlideShow () {
+				pauseBtn.innerHTML = "Play";
+				clearInterval(slideInterval);
+				playing = false;
+			}
+			function playSlideShow () {
+				pauseBtn.innerHTML = "Pause";
+				playing = true;
+				slideInterval = setInterval(nextSlide, 1000);
+			}
+		};
+	</script>
+</head>
+<body>
+	<ul id="slides">
+		<li class="slide showing">1</li>
+		<li class="slide">2</li>
+		<li class="slide">3</li>
+		<li class="slide">4</li>
+		<li class="slide">5</li>
+	</ul>
+	<button id="pause" class="controls">Pause</button>
+</body>
+</html>

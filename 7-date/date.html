@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>date</title>
+    <script type="text/javascript">
+    //关于 setTimeout() 和 setInterval() 需要注意的是，他们的第一个参数可以是一个函数名，也可以是一个字符串。当为函数名的时候无法传递参数，而当为字符串时可以传递参数，见下例
+    // function sayHi (name) {alert("Hi, " + name);}
+    // setTimeout(sayHi, 1000);
+    // setTimeout("sayHi('Steam')", 1000);
+    //下面是通过 setInterval() 方法实现的每隔一秒打印一次
+    // var now;
+    // setInterval(function() {
+    //     now = new Date();
+    //     console.log(now);
+    // }, 1000);
+    //下面是通过 setTimeout() 方法实现的每隔一秒打印一次
+    // function test () {
+    // 	console.log(new Date());
+    // 	setTimeout(test, 1000);
+    // }
+    // var timer = setTimeout(test, 1000);
+    </script>
+</head>
+
+<body>
+    <p id="date"></p>
+</body>
+
+</html>

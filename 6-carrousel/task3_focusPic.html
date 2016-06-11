@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task3_focusPic</title>
+    <style type="text/css">
+    div.container {
+        width: 425px;
+        height: 300px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        /*border: 1px solid red;*/
+    }
+    
+    div.box {
+        width: 1700px;
+        height: 300px;
+        position: absolute;
+        transition: transform 1.0s cubic-bezier(0.24, 0.24, 0.74, 0.74);
+        /*left: -425px;*/
+    }
+    
+    img.focusPic {
+        width: 425px;
+        height: 300px;
+        float: left;
+    }
+    
+    span.toLeft,
+    span.toRight {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 40px;
+        color: #F44336;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+    
+    div.container span.toLeft:hover,
+    div.container span.toRight:hover {
+        /*color: #FF9800;*/
+        opacity: 1;
+    }
+    
+    span.toLeft {
+        left: 5px;
+    }
+    
+    span.toRight {
+        right: 5px;
+    }
+    
+    ul {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0;
+    }
+    
+    ul li {
+        float: left;
+        width: 40px;
+        height: 14px;
+        border-radius: 7px;
+        background-color: #000;
+        margin-right: 10px;
+        list-style: none;
+        cursor: pointer;
+        text-align: center;
+        line-height: 14px;
+        color: #fff;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        opacity: 0.5;
+    }
+    
+    ul li:first-child {
+        background-color: #F44336;
+    }
+    
+    ul li:hover {
+        background-color: #F44336;
+    }
+    
+    div.container:hover li,
+    div.container:hover span {
+        opacity: 0.7;
+    }
+    </style>
+    <script type="text/javascript">
+    //1. 要把所有的点击事件都使用事件代理或者事件委托实现。
+    //2. 要把代码简化到最简单，了解各种不同的轮播效果的利弊，比如通过 transform 变化和通过 绝对 left 变化，还有通过 margin-left 变化的
+    //3. 通过这个任务再去实现上下翻页和渐变翻页。
+    window.onload = function() {
+        //实现自动播放功能，每隔一段时间就执行向右 transform 的函数
+        function autoPlay() {
+            picWidth = picWidth < 1275 ? picWidth += 425 : 0;
+            box.style.transform = "translate(" + (-picWidth) + "px, 0px)";
+            for (var i = 0; i < picList.length; i++) {
+                picList[i].style.background = "#000";
+            }
+            picList[picWidth / 425].style.background = "#F44336";
+        }
+        var timer1 = setInterval(autoPlay, 2000);
+        //点击左键的时候，#box 整体向左移动一个 img 的 width，通过 transform 来改变。
+        var box = document.getElementById('box'),
+            toLeft = document.getElementById('toLeft'),
+            toRight = document.getElementById('toRight'),
+            picWidth = 0,
+            picList = document.getElementById('picList').getElementsByTagName('li'),
+            container = document.getElementById('container');
+        toRight.onclick = function(event) {
+            picWidth = picWidth < 1275 ? picWidth += 425 : 0;
+            box.style.transform = "translate(" + (-picWidth) + "px, 0px)";
+            //点击的时候，根据 picWidth 的值，相应的 indexItem 也需要发生变化
+            for (var i = 0; i < picList.length; i++) {
+                picList[i].style.background = "#000";
+            }
+            picList[picWidth / 425].style.background = "#F44336";
+        };
+        toLeft.onclick = function(event) {
+            // console.log(picWidth);//获取点击事件发生时的 picWidth
+            if (picWidth > 0) {
+                picWidth = picWidth - 425;
+            } else if (picWidth == 0) {
+                picWidth = 1275;
+            }
+            // console.log(picWidth);//获取改变后的 picWidth，并将该值应用到 transform 属性中以改变点击左键后向左偏移的效果
+            box.style.transform = "translate(" + (-picWidth) + "px, 0px)";
+            //点击的时候，根据 picWidth 的值，相应的 indexItem 也需要发生变化
+            for (var i = 0; i < picList.length; i++) {
+                picList[i].style.background = "#000";
+                picList[picWidth / 425].style.background = "#F44336";
+            }
+        };
+        var i,
+            len = picList.length;
+        for (i = 0; i < len; i++) {
+            (function(i) {
+                picList[i].onmouseover = function(event) {
+                    //所有 item 的 background 都编程统一的颜色，然后自己的 background 变色
+                    for (var j = 0; j < picList.length; j++) {
+                        picList[j].style.background = "#000";
+                    }
+                    this.style.background = "#F44336";
+                    //对应的 transform 要根据 i 发生变化
+                    box.style.transform = "translate(" + (-425 * i) + "px, 0px)";
+                    picWidth = 425 * i;
+                };
+            })(i)
+        }
+        //当鼠标 mouseover 到 container 上的时候，终止自动滚动
+        container.onmouseover = function(event) {
+            clearInterval(timer1);
+        };
+        //当鼠标 mouseover 到 container 上的时候，终止自动滚动
+        container.onmouseout = function(event) {
+            timer1 = setInterval(autoPlay, 2000);;
+        };
+    };
+    </script>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="box" id="box">
+            <img src="imgs/free1.jpg" alt="free1" class="focusPic">
+            <img src="imgs/free2.jpg" alt="free2" class="focusPic">
+            <img src="imgs/free3.jpg" alt="free3" class="focusPic">
+            <img src="imgs/free4.jpg" alt="free3" class="focusPic">
+        </div>
+        <span class="toLeft" id="toLeft">&lt;</span>
+        <span class="toRight" id="toRight">&gt;</span>
+        <ul class="picList" id="picList">
+            <li class="listItem">1</li>
+            <li class="listItem">2</li>
+            <li class="listItem">3</li>
+            <li class="listItem">4</li>
+        </ul>
+    </div>
+</body>
+
+</html>
