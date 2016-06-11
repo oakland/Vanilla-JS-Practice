@@ -4,144 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <style type="text/css">
-    div.clock {
-        position: relative;
-        width: 150px;
-        height: 150px;
-    }
-    
-    div#plate {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: #00BCD4;
-        box-shadow: 2px 2px 5px #555;
-    }
-    div.plate_num {
-        position: absolute;
-        color: #fff;
-    }
-    div.plate_num:nth-child(1) {
-        left: 100%;
-        top: 50%;
-        transform: translate(-150%,0%);
-    }
-    div.plate_num:nth-child(2) {
-        left: 50%;
-        top: 100%;
-        transform: translate(0%,-150%);
-    }
-    div.plate_num:nth-child(3) {
-        left: 0%;
-        top: 50%;
-        transform: translate(50%,-50%);
-    }
-    div.plate_num:nth-child(4) {
-        left: 50%;
-        top: 0%;
-        transform: translate(-50%,50%);
-    }
-    div.plate_dot {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        width: 3px;
-        height: 3px;
-        border-radius: 50%;
-        background-color: #fff;
-        z-index: 2;
-    }
-    
-    div#hour_hand,
-    div#minute_hand,
-    div#second_hand {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        background: #333;
-        transform-origin: 0% 50%;
-        transform: rotate(-90deg);
-        transition: transform 1s linear;
-    }
-    
-    div#hour_hand {
-        width: 50px;
-        height: 3px;
-    }
-    
-    div#minute_hand {
-        width: 60px;
-        height: 2px;
-    }
-    
-    div#second_hand {
-        width: 70px;
-        height: 1px;
-    }
-    </style>
     <script type="text/javascript">
     window.onload = function() {
-        var date_text = document.getElementById('date_text'),
-            hour_hand = document.getElementById('hour_hand'),
-            minute_hand = document.getElementById('minute_hand'),
-            second_hand = document.getElementById('second_hand');
-        setInterval(printTime, 1000);
-
-        function printTime() {
-            var date = new Date();
-            var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-            var year = date.getFullYear(),
-                month = date.getMonth(),
-                day = date.getDate(),
-                week = weekdays[date.getDay()],
-                hour = date.getHours(),
-                minute = addZero(date.getMinutes()),
-                second = addZero(date.getSeconds());
-
-            //如果分秒只有一位数字的时候，给前面添加一个 0 之后返回这个数字
-            function addZero(num) {
-                if (num.toString().length == 1) {
-                    num = "0" + num;
-                }
-                //如果不符合一位数字的时候，则直接返回该数值
-                return num;
-            }
-
-            date_text.innerHTML = "Date: " + year + "." + month + "." + day + " Week: " + week + " Time: " + hour + ":" + minute + ":" + second;
-
-            //根据 second 的大小，调整 second_hand 的 transform: rotate(); 属性，不断地调整 second_hand 的transform 属性
-            var second_hand_num = (parseInt(second) / 60) * 360 - 90;
-            second_hand.style.transform = "rotate(" + second_hand_num + "deg)";
-            //根据 minute 的大小，调整 minute_hand 的 transform: rotate(); 属性，不断地调整 minute_hand 的transform 属性
-            var minute_hand_num = (parseInt(minute) / 60) * 360 - 90;
-            minute_hand.style.transform = "rotate(" + minute_hand_num + "deg)";
-            //根据 hour 的大小，调整 hour_hand 的 transform: rotate(); 属性，不断地调整 hour_hand 的transform 属性
-            var hour_hand_num = (parseInt(hour) / 12) * 360 - 90;
-            hour_hand.style.transform = "rotate(" + hour_hand_num + "deg)";
+        //OOP test
+        function Foo(y) {
+            this.y = y;
         }
+        Foo.prototype.x = 10;
+        Foo.prototype.calculate = function(z) {
+            return this.x + this.y + z;
+        };
+
+        var b = new Foo(20),
+            c = new Foo(20);
+        console.log(b.y == c.y);
+        console.log(b.x == c.x);
+        console.log(b.calculate == c.calculate);
+        console.log(b.__proto__ == c.__proto__);
+        console.log(c.__proto__ == Foo.prototype);
+        console.log(Foo.prototype.constructor == Foo);
+
     };
     </script>
 </head>
 
 <body>
-    <p id="date_text">&nbsp;</p>
-    <div class="clock">
-        <div id="plate">
-            <div class="plate_num">3</div>
-            <div class="plate_num">6</div>
-            <div class="plate_num">9</div>
-            <div class="plate_num">12</div>
-            <div class="plate_dot"></div>
-        </div>
-        <div id="hour_hand"></div>
-        <div id="minute_hand"></div>
-        <div id="second_hand"></div>
-    </div>
 </body>
 
 </html>

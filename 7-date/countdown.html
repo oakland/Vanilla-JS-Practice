@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>countdown</title>
+    <script type="text/javascript">
+    window.onload = function() {
+        //获取结果对象，点击的时候将该对象的 innerHTML 设置为计算后的相差天数
+        var result = document.querySelector(".result");
+
+        //当 submitBtn 点击的时候触发点击函数
+        var submitBtn = document.getElementById('submitBtn');
+        submitBtn.onclick = function() {
+            //获取 dateStart 和 dateEnd 的值
+            var dateStart = document.getElementById('dateStart'),
+                dateEnd = document.getElementById('dateEnd');
+            //打印 dateStart 和 dateEnd 的 value
+            // console.log(typeof(dateStart.value));//string
+            // console.log(typeof(dateEnd.value));//string
+            // console.log(dateStart.value);//example, 2016-06-01
+            // console.log(dateEnd.value);//example, 2016-06-02
+
+            //将 dateStart 和 dateEnd 依据年月日分别通过 setFullYear() setMonth() setDate() 将其设置为 Date 对象
+            //获取 dateStart 的 year month date
+            dateStartYear = dateStart.value.split("-")[0];
+            dateStartMont = dateStart.value.split("-")[1];
+            dateStartDate = dateStart.value.split("-")[2];
+            var dateStartObj = new Date();
+            dateStartObj.setFullYear(dateStartYear);
+            dateStartObj.setMonth(dateStartMont);
+            dateStartObj.setDate(dateStartDate);
+
+            //获取 dateStart 的 year month date
+            dateEndYear = dateEnd.value.split("-")[0];
+            dateEndMont = dateEnd.value.split("-")[1];
+            dateEndDate = dateEnd.value.split("-")[2];
+            var dateEndObj = new Date();
+            dateEndObj.setFullYear(dateEndYear);
+            dateEndObj.setMonth(dateEndMont);
+            dateEndObj.setDate(dateEndDate);
+
+            //根据 dateStartObj.getTime() 和 dateEndObj.getTime() 相差的值，计算两者相差的天数
+            //取两者相差的绝对值，然后再取整
+            var abs = Math.abs((dateEndObj.getTime() - dateStartObj.getTime()) / (1000 * 60 * 60 * 24));
+            result.innerHTML = "两个日期相差" + parseInt(abs) + "天";
+        };//submitBtn.onclick 事件结束
+        //根据上述办法，我们还可以设置距离高考倒计时时钟等等这样的 demo
+    };// window.onload 事件结束
+    </script>
+</head>
+
+<body>
+    <p class="instruction">选择一个 起始时间 和一个 终止时间，点击“计算相差”按钮，“计算结果”将显示两者相差的天数</p>
+    <label for="dateStart">起始日期：</label>
+    <input type="date" name="" id="dateStart">
+    <label for="dateEnd">终止日期：</label>
+    <input type="date" name="" id="dateEnd">
+    <button id="submitBtn">计算相差</button>
+    <p class="result">计算结果</p>
+</body>
+
+</html>
