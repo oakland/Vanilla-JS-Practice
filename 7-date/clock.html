@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>showTime</title>
     <style type="text/css">
     div.clock {
         position: relative;
@@ -21,35 +21,41 @@
         background: #00BCD4;
         box-shadow: 2px 2px 5px #555;
     }
+    
     div.plate_num {
         position: absolute;
         color: #fff;
     }
+    
     div.plate_num:nth-child(1) {
         left: 100%;
         top: 50%;
-        transform: translate(-150%,0%);
+        transform: translate(-150%, 0%);
     }
+    
     div.plate_num:nth-child(2) {
         left: 50%;
         top: 100%;
-        transform: translate(0%,-150%);
+        transform: translate(0%, -150%);
     }
+    
     div.plate_num:nth-child(3) {
         left: 0%;
         top: 50%;
-        transform: translate(50%,-50%);
+        transform: translate(50%, -50%);
     }
+    
     div.plate_num:nth-child(4) {
         left: 50%;
         top: 0%;
-        transform: translate(-50%,50%);
+        transform: translate(-50%, 50%);
     }
+    
     div.plate_dot {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         width: 3px;
         height: 3px;
         border-radius: 50%;
