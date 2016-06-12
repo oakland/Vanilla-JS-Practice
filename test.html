@@ -6,29 +6,32 @@
     <title>Document</title>
     <script type="text/javascript">
     window.onload = function() {
-        //OOP test
-        function Foo(y) {
-            this.y = y;
-        }
-        Foo.prototype.x = 10;
-        Foo.prototype.calculate = function(z) {
-            return this.x + this.y + z;
+        var selectBox = document.getElementById('selectBox'),
+            inputBox = document.getElementById('inputBox'),
+            result1 = document.getElementById('result1'),
+            result2 = document.getElementById('result2');
+        selectBox.onchange = function() {
+            var val = selectBox.value;
+            result1.innerHTML = val;
         };
-
-        var b = new Foo(20),
-            c = new Foo(20);
-        console.log(b.y == c.y);
-        console.log(b.x == c.x);
-        console.log(b.calculate == c.calculate);
-        console.log(b.__proto__ == c.__proto__);
-        console.log(c.__proto__ == Foo.prototype);
-        console.log(Foo.prototype.constructor == Foo);
-
+        inputBox.onchange = function() {
+            var val = inputBox.value;
+            result2.innerHTML = val;
+        };
     };
     </script>
 </head>
 
 <body>
+    <select name="" id="selectBox">
+        <option value="red">red</option>
+        <option value="blue">blue</option>
+        <option value="yellow">yellow</option>
+        <option value="green">green</option>
+    </select>
+    <p id="result1">result</p>
+    <input type="text" id="inputBox">
+    <p id="result2">result of textbox</p>
 </body>
 
 </html>
