@@ -6,10 +6,11 @@
     <title>timer</title>
     <script type="text/javascript">
     window.onload = function() {
-        //当第一次点击 startBtn 的时候，执行 count 函数
-        var startBtn = document.getElementById('startBtn');
-        var clock = document.getElementById('timerClock').getElementsByTagName('span');
-        var switchPonter = false;
+        var startBtn = document.getElementById('startBtn'),
+            resetBtn = document.getElementById('resetBtn');
+        var clock = document.getElementById('timerClock').getElementsByTagName('span'); //获取时分秒
+        var switchPonter = false; //判断开始和暂停的指针
+        //当点击 startBtn 的时候，执行事件处理器函数
         startBtn.onclick = function() {
             //当 switchPonter 为 false 的时候，执行一套程序
             if (!switchPonter) {
@@ -38,12 +39,20 @@
                 //startBtn 的 innerHTML 变为 Pause
                 startBtn.innerHTML = "Pause";
                 switchPonter = true;
-            } else {//当 switchPonter 为 true 的时候，执行另一套程序
+            } else { //当 switchPonter 为 true 的时候，执行另一套程序
                 clearInterval(timer);
                 startBtn.innerHTML = "Start";
                 switchPonter = false;
             }
         }; //点击 start 按钮的事件处理器
+        resetBtn.onclick = function() {
+            clearInterval(timer);
+            for (var i = 0; i < clock.length; i++) {
+                clock[i].innerHTML = "00";
+            }
+            startBtn.innerHTML = "Start";
+            switchPonter = false;
+        };
     };
     </script>
 </head>
@@ -55,6 +64,7 @@
         <span>00</span>
     </p>
     <button id="startBtn">Start</button>
+    <button id="resetBtn">Reset</button>
 </body>
 
 </html>
