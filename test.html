@@ -4,34 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script type="text/javascript" src="jquery-2.2.0.js"></script>
     <script type="text/javascript">
-    window.onload = function() {
-        var selectBox = document.getElementById('selectBox'),
-            inputBox = document.getElementById('inputBox'),
-            result1 = document.getElementById('result1'),
-            result2 = document.getElementById('result2');
-        selectBox.onchange = function() {
-            var val = selectBox.value;
-            result1.innerHTML = val;
-        };
-        inputBox.onchange = function() {
-            var val = inputBox.value;
-            result2.innerHTML = val;
-        };
-    };
+    $(document).ready(function() {
+        // // ajax 请求一个路径， success 后将返回的 json 打印到控制台
+        // $.ajax(function() {
+        //     url: "http://www.weather.com.cn/data/cityinfo/101010100.html",
+        //     data: "http://www.weather.com.cn/data/cityinfo/101010100.html",
+        //     success: function(data) {
+        //         console.log(data);
+        //     },
+        //     error: function(err) {
+        //         console.log(err);
+        //     }
+        // });//ajax end
+        $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(_result) {
+            if (remote_ip_info.ret == '1') {
+                $.ajax({
+                    type: "GET",
+                    url: "http://wthrcdn.etouch.cn/weather_mini?city=" + remote_ip_info.city,
+                    data: "",
+                    success: function(msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+        });
+    });
     </script>
 </head>
 
 <body>
-    <select name="" id="selectBox">
-        <option value="red">red</option>
-        <option value="blue">blue</option>
-        <option value="yellow">yellow</option>
-        <option value="green">green</option>
-    </select>
-    <p id="result1">result</p>
-    <input type="text" id="inputBox">
-    <p id="result2">result of textbox</p>
 </body>
 
 </html>

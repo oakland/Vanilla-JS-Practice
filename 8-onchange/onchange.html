@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>onchange</title>
+    <script type="text/javascript">
+    window.onload = function() {
+        var selectBox = document.getElementById('selectBox'),
+            inputBox = document.getElementById('inputBox'),
+            result1 = document.getElementById('result1'),
+            result2 = document.getElementById('result2');
+        selectBox.onchange = function() {
+            var val = selectBox.value;
+            result1.innerHTML = val;
+        };
+        inputBox.onchange = function() {
+            var val = inputBox.value;
+            result2.innerHTML = val;
+        };
+    };
+    </script>
+</head>
+
+<body>
+    <select name="" id="selectBox">
+        <option value="red">red</option>
+        <option value="blue">blue</option>
+        <option value="yellow">yellow</option>
+        <option value="green">green</option>
+    </select>
+    <p id="result1">result</p>
+    <input type="text" id="inputBox">
+    <p id="result2">result of textbox</p>
+</body>
+
+</html>
