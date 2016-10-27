@@ -48,6 +48,24 @@
     console.log(max);
     console.log(min);
 
+    // 找最大值和最小值的另外一种方法，从underscore中学来的
+    function max(arr) {
+        var max = -Infinity;
+        for (var i = 0; i < arr.length; i++) {
+            if (max < arr[i]) max = arr[i];
+        }
+        return max;
+    }
+
+    function min(arr) {
+        var min = Infinity;
+        for (var i = 0; i < arr.length; i++) {
+            if (min > arr[i]) min = arr[i];
+        }
+        return min;
+    }
+
+    // 根据现有数组获取一个随机数组
     function shuffle(arr) {
         //获取 arr.length，获取一个 0-arr.length 之间的随机数，然后将这个随机的 index 和对应的值 push 到新的 array 中，最后返回这个新的 array
         var newArr = [];
