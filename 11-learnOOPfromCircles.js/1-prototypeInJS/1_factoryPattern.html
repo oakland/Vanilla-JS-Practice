@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>factoryPattern</title>
+	<script type="text/javascript">
+		// 1. 创建一个工厂
+		function person(name, age) {
+			var o = {};
+			o.name = name;
+			o.age = age;
+			o.sayName = function() {
+				console.log(o.name)
+			};
+			return o;
+		}
+
+		// 2. 由工厂创建两个对象
+		var p1 = person('jizq', 28),
+			p2 = person('robot', 18);
+		p1.sayName(); // jizq
+		p2.sayName(); // robot
+
+		// 3. 查看这两个对象之间的关系
+		console.log(p1.sayName == p2.sayName); // false
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

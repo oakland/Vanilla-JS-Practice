@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3_prototypePattern</title>
+	<script type="text/javascript">
+		// 1. 创建一个构造器
+		function Person() {}
+
+		// 2. 创建一个构造器原型
+		Person.prototype.name = 'jizq';
+		Person.prototype.age = 28;
+		Person.prototype.sayName = function() {
+			console.log(this.name)
+		};
+
+		// 3. 由构造器创建两个实例
+		var p1 = new Person(),
+			p2 = new Person();
+		p1.sayName(); // jizq
+		p2.sayName(); // jizq
+		
+		// 4. 查看这两个实例之间的关系
+		console.log(p1.sayName == p2.sayName); // true
+
+		// Problems with prototypes
+		// 当一个属性包含的是一个引用值的时候，使用 prototype 会出现问题。例如：
+		Person.prototype.friends = ['Shelby', 'Court'];
+		p1.friends.push('Van');
+		console.log(p2.friends); // ['Shelby', 'Court', 'Van']
+		// 因为 friends 这个属性并不是存在在 p1 上，而是存在于 Person.prototype 上面。通常，实例需要拥有自己的属性。
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

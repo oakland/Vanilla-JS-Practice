@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OOPtest</title>
+</head>
+<body>
+	<div id="num1"></div>
+	<div id="num2"></div>
+	<div id="num3"></div>
+	<script type="text/javascript">
+		(function() {
+			// 1. 定义一个构造函数
+			/* 定义构造函数的时候有一点值得注意，就是一定要定义 Num = window.Num ，因为一定要保证 window 具备这个构造函数的变量，
+			也就是说这个构造函数是从外边能访问到的，如果没有这个的话，外部是无法访问 Num 这个构造函数的。*/
+			var Num = window.Num = function(id, innerHTML) {
+				this.el = document.getElementById(id);
+				this.el.innerHTML = innerHTML;
+				this.print(innerHTML); // print 方法定义在 Num.prototype 中，这里在构造函数中就可以使用了
+			}
+			// 2. 定义原型链上的属性和方法
+			Num.prototype = {
+				constructor: Num,
+				print: function(innerHTML) {
+					console.log(innerHTML);
+				}
+			}
+			// 3. 创建一个 Nun.create 方法，用于下面使用
+			Num.create = function(id, innerHTML) {
+				return new Num(id, innerHTML);
+			};
+		})()
+		// 上面的闭包其实就是相当于创建了一个 Num 模块
+
+		// 使用for遍历创建多个实例，每个实例对应一个HTML 元素，并将其 innerHTML 修改为一个索引数字
+		for (var i = 1; i < 4; i++) {
+			// var idNum = 'num' + i;
+			// Num.create(idNum, i)
+			Num.create('num'+i, i)
+		}
+	</script>
+</body>
+</html>

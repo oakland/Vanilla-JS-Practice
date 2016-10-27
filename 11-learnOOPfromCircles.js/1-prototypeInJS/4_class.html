@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>4_class</title>
+	<script type="text/javascript">
+		class Person {
+			constructor(name, age) {
+				this.name = name;
+				this.age = age;
+			}
+			sayName() {
+				console.log(this.name)
+			}
+		}
+		var p1 = new Person('jizq', 28);
+		var p2 = new Person('robot', 18);
+		p1.sayName();
+		p2.sayName();
+
+		console.log(p1.sayName == p2.sayName);
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

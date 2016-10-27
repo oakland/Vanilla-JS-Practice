@@ -1,0 +1,12 @@
+关于JS原型继承的原理，主要参考了以下内容：
+
+1. 书籍
+	《JavaScript高级程序设计（第三版）》，第六章
+
+2. 网络资源
+	2.1 Javascript 面向对象编程（一）：封装
+		http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html
+	2.2 Javascript面向对象编程（二）：构造函数的继承
+		http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html
+	2.3 Javascript面向对象编程（三）：非构造函数的继承
+		http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html

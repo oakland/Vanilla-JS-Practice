@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_constructorPattern</title>
+	<script type="text/javascript">
+		// 1. 创建一个构造器
+		function Person(name, age) {
+			this.name = name;
+			this.age = age;
+			this.sayName = function() {
+				console.log(this.name)
+			};
+		}
+
+		// 2. 由构造器创建两个实例
+		var p1 = new Person('jizq', 28),
+			p2 = new Person('robot', 18);
+		p1.sayName(); // jizq
+		p2.sayName(); // robot
+
+		// 3. 查看这两个实例之间的关系
+		console.log(p1.sayName == p2.sayName); // false
+
+		// 构造器的方式比工厂方式少些一些代码，但是本质上没有太大区别，都是创建一个全新的实例(instance)，实例之间没有太多关系
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
