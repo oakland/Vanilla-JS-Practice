@@ -1,6 +1,6 @@
 ## 彻底理解 JS 面向对象编程（OOP）
 
-接上文，[2-彻底理解JS中面向对象（二、困惑释疑-为什么要用OOP）](http://)
+接上文，[2-彻底理解JS中面向对象（二、困惑释疑-为什么要用OOP）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/2-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BA%8C%E3%80%81%E5%9B%B0%E6%83%91%E9%87%8A%E7%96%91-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8OOP%EF%BC%89.md)
 
 ### 三、JS 中如何实现 OOP
 
@@ -10,7 +10,12 @@
 
 #### 工厂模式
 
-工厂模式，其实就是把对象赋值属性和方法的整个动作交给一个函数去实现，请查看 [1_factoryPattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/1_factoryPattern.html)，在这个函数中，注意工厂模式函数的的第一个语句：
+查看 [1_factoryPattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/1_factoryPattern.html)，
+
+工厂模式其实就是将对象挂载属性和方法的过程封装到一个函数中，按照下面的三个步骤去实现的：
+新建一个对象 => 通过传入参数的方式，为对象挂载相应的属性和方法 => 返回对象
+
+在这个函数中，注意工厂模式函数的的第一个语句：
 
 ```
 var o = new Object(); 
@@ -23,20 +28,26 @@ var o = new Object();
 
 查看 [2_constructorPattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/2_constructorPattern.html)，
 
-可以看到 person1.sayName == person2.sayName 的结果依然是 false。其中的原因在上面 二、为什么要用 OOP 中有详细阐述，摘录了英文版《高程三》的内容，大家看完应该会有更深刻的理解。
+可以看到 person1.sayName == person2.sayName 的结果依然是 false。其中的原因在之 [二、为什么要用 OOP](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/2-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BA%8C%E3%80%81%E5%9B%B0%E6%83%91%E9%87%8A%E7%96%91-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8OOP%EF%BC%89.md) 中有详细阐述，主要参考从从英文版《高程三》中摘录的内容，大家看完应该会有更深刻的理解。
 
-#### 原型模式
+#### 原型模式（应该重点查看的模式）
 
-这个是要详细说明的模式，我会摘录大段《高程三》中的内容，并做精简的概要，让大家能更明确地理解原型模式。
+这个模式是要详细说明的模式，我会摘录大段《高程三》中的内容，最后对这些内容做精简、概要，让大家能更明确地理解原型模式。
 
-Each function is created with a prototype property, which is an object containing properties and methods that should be available to instances of a particular reference type. This object is literally
-a prototype for the object to be created once the constructor is called. The benefit of using the prototype is that all of its properties and methods are shared among object instances. Instead of assigning object information in the constructor, they can be assigned directly to the prototype, as in this example:
+《高程三》英文版，184页，The Prototype Pattern 
 
-上面这段话摘录自《高程三》对于原型模式的第一段话，这段话非常经典，而且就已经很明确地阐述了原型之间的关系了。
-每个**函数**都有一个 prototype 属性，记住，只有函数才有，对象没有，而每个对象都会拥有的，是一个 \__proto__ 属性，后面会对 \__proto__ 属性详细讲解。其实因为在 JS 中，函数也是对象，所以，函数也会拥有一个 \__proto__ 属性。也就是说函数会同时拥有 prototype 和 \__proto__ 属性，而对象只有 \__proot__ 属性。
-构造器作为一个普通函数，也会拥有一个 prototype 的属性。这个 prototype 属性是个对象，这个对象会拥有很多属性和方法，而一旦使用 new 操作符调用构造器函数的时候，所有的实例就会拥有构造器函数的 prototype 属性上的所有属性和方法，这样就实现了原型继承。怎么样，很简单吧？也就是在 [3_prototypePattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/3_prototypePattern.html) 中，p1.sayName 和 p2.sayName 是同一个 sayName。当通过 `Person.prototype` 来修改一个属性的时候，所有的实例都会受到影响。
+"Each function is created with a prototype property, which is an object containing properties and methods that should be available to instances of a particular reference type. This object is literally
+a prototype for the object to be created once the constructor is called. The benefit of using the prototype is that all of its properties and methods are shared among object instances. Instead of assigning object information in the constructor, they can be assigned directly to the prototype, as in this example:"
 
-Unlike the constructor pattern, the properties and methods are all shared among instances, so person1 and person2 are both accessing the same set of properties and the same sayName() function. 
+这段话非常经典，而且已经很明确地阐述了实例和原型之间的关系了。
+
+每个**函数**都有一个 prototype 属性，记住，只有函数才有，对象没有，而每个对象都会拥有一个 \__proto__ 属性（后面会对 \__proto__ 属性详细讲解）。因为在 JS 中，函数也是对象，所以，函数也会拥有一个 \__proto__ 属性。也就是说函数会同时拥有 prototype 和 \__proto__ 属性，而对象只有 \__proot__ 属性。（大家仔细体会和品味这段话，或者先记下来，之后看完整个系列文章之后再回头来看这句话，非常重要）
+
+构造器作为一个普通函数，如上面所说，会拥有一个 prototype 的属性。这个 prototype 属性是个对象，这个对象就是原型对象（下文说原型对象都指的是这个对象）。原型对象会拥有很多属性和方法，而一旦使用 new 操作符调用构造器函数的时候，所有的实例就会拥有构造器函数的 prototype 属性上的所有属性和方法，也就是原型对象上的所有属性和方法，这样就实现了原型继承。怎么样，很简单吧？也就是在 [3_prototypePattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/3_prototypePattern.html) 中，p1.sayName 和 p2.sayName 是同一个 sayName。当通过 `Person.prototype` 来修改 sayName 属性的时候，所有的实例都会受到影响，因为所有的实例都是指向这个方法的。
+
+《高程三》英文版，185页，第一段话第三句： 
+
+"Unlike the constructor pattern, the properties and methods are all shared among instances, so person1 and person2 are both accessing the same set of properties and the same sayName() function. "
 
 上面这段英文是《高程三》对于原型继承的解释。
 
@@ -47,9 +58,9 @@ Unlike the constructor pattern, the properties and methods are all shared among 
 ```
 p1.constructor == p2.constructor == Person.prototype.constructor == Person
 ```
-其实 p1.constructor 和 p2.constructor 之所以指向 Person 构造器的原因，就是因为他们继承了 Person.prototype.constructor 的原因。
+其实 p1.constructor 和 p2.constructor 之所以指向 Person 构造器的原因，就是因为他们继承了 Person.prototype.constructor 的原因。因为 Person.prototype 默认会拥有一个 constructor 属性，这个属性指回 Person 构造器。
 
-原型链，其实就是对于 Person.prototype 而言，他也有原型，他的原型是 Person.prototype.__proto__，而这个对象是 new Object() 构造出来的， 所以 Person.prototype.__proto__ == Object.prototype。
+原型链其实就是，原型对象的也有原型，所以会形成一个链状关系。对于 Person.prototype 而言，他也有原型，他的原型是 Person.prototype.__proto__，而这个对象是 new Object() 构造出来的， 所以 Person.prototype.__proto__ == Object.prototype。
 
 这就是一级一级向上寻找的原型链。而关于这个原型链，最经典的就是知乎上某个回答者的一张图。[javascript原型](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/javascript%E5%8E%9F%E5%9E%8B.jpg)
 
@@ -57,8 +68,15 @@ p1.constructor == p2.constructor == Person.prototype.constructor == Person
 
 #### ES6 中的 class
 
-《高程三》出版的时候，还没有 ES6。因此《高程三》中没有阐述 ES6 中 class 相关的内容。这部分的内容，请查看 [MDN 关于 class 的解释](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class)。这里还需补充其他的关于 ES6 中 class 相关的网络文章。具体示例参见[4_class.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/4_class.html)。
+最后再说一下 ES6 中 class 实现原型继承。
 
-ES6 中 class 其实是原型继承的语法糖而已，所以没有什么可以讲解太多的，如果上面的内容你看懂了，那么ES6 中的 class 只是你创建原型的一种方式，原理还是前面提到的原型模式。
+因为《高程三》出版的时候，还没有 ES6。因此《高程三》中没有阐述 ES6 中 class 相关的内容。这部分的内容，请查看 [MDN 关于 class 的解释](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class)。
 
-接下文，[4-彻底理解JS中面向对象（四-一个OOP的典型案例）](http://)
+网络上还有很多关于 ES6 中 class 的文章，我这里暂时放一个占位符，以后找到合适的文章会补充在这里。
+这里还需补充其他的关于 ES6 中 class 相关的网络文章。
+
+具体示例参见[4_class.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/4_class.html)。这个示例其实就是使用 class 实现的继承。
+
+ES6 中 class 其实是原型继承的语法糖而已，所以没有什么可以讲解太多的，如果之前的内容你看懂了，那么ES6 中的 class 只是你创建原型的一种方式而已，并不是什么新的内容，原理还是前面提到的原型模式，只不过用了一个关键词 class。
+
+接下文，[4-彻底理解JS中面向对象（四-一个OOP的典型案例）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/4-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%9B%9B-%E4%B8%80%E4%B8%AAOOP%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B%EF%BC%89.md)

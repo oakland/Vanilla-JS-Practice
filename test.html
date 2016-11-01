@@ -18,23 +18,65 @@
         //         console.log(err);
         //     }
         // });//ajax end
-        $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(_result) {
-            if (remote_ip_info.ret == '1') {
-                $.ajax({
-                    type: "GET",
-                    url: "http://wthrcdn.etouch.cn/weather_mini?city=" + remote_ip_info.city,
-                    data: "",
-                    success: function(msg) {
-                        console.log(msg);
-                    }
-                });
-            }
-        });
+        // $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(_result) {
+        //     if (remote_ip_info.ret == '1') {
+        //         $.ajax({
+        //             type: "GET",
+        //             url: "http://wthrcdn.etouch.cn/weather_mini?city=" + remote_ip_info.city,
+        //             data: "",
+        //             success: function(msg) {
+        //                 console.log(msg);
+        //             }
+        //         });
+        //     }
+        // });
+
+        // 关于闭包的理解，再增加一点，典型的如：
+        // function foo() {
+        //     var a = 0;
+        //     return function() {
+        //         return a++
+        //     }
+        // }
+        // var bar = foo();
+        // bar();
+        // 上面是一个典型的闭包，因为 bar 的作用于环境是在 window 中，按道理 a 是定义在 foo 函数内部的，当 foo 执行完毕之后，外部是无法获取到 a 的，但是 bar 指向 function() {return a++}，则 bar 就可以调用内部的 a 变量。
+        // 还有一个典型的闭包，就是遍历一个 nodeList 然后给每一个元素添加一个 eventHandler 函数的时候
+        // for (var i = 0; i < list.length; i++) {
+        //     list[i] = function() {
+        //         alert(i)
+        //     }
+        // }
+        // 这个问题的关键在于，function() {alert(i)} 一直没有执行，JS 中等号是从右向左赋值的，也就是说右侧的内容只是一个静态的，但是左侧的 list[i] 却是一个动态变化的，所以说 list 中的每个 item 都会拥有一个 function() {}，但问题是这个 function是个静态的，所以这个静态的 function 最后弹出的时候就只能是最后的 i 的值，也就是 list.length+1 了
+
     });
     </script>
 </head>
 
 <body>
+    <ul id="list">
+        <li>apple</li>
+        <li>pear</li>
+        <li>orange</li>
+    </ul>
+    <script type="text/javascript">
+    window.onload = function() {
+        var list = document.getElementById('list').getElementsByTagName('li');
+        for (var i = 0; i < list.length; i++) {
+            (function(j) {
+                list[j].onclick = function() {
+                    alert(j);
+                }
+            })(i)
+            // 这表示每一个都添加一个 function ，而下面的方式则表示，所有的元素都添加同一个 function，这个 function 内部的 i 是静态的而不是动态的，因为在没有执行的时候，i 只是一个静止的变量而已，并没有去一个一个获取遍历时候的每一个 i
+        for (var i = 0; i < list.length; i++) {
+            list[i].onclick = function() {
+                alert(i)
+            }
+        }
+        }
+    }
+    </script>
 </body>
 
 </html>

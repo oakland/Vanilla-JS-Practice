@@ -5,6 +5,26 @@
 	<title>4_combination</title>
 	<script type="text/javascript">
 		// 通常将构造器方式和原型模式结合使用。构造器用于定义实例的属性，而原型用于定义方法和公有属性。通过这种方式，每个实例都会拥有自己独立的实例属性，同时共享方法的引用，进而节约内存。
+
+		// 1. 创建一个构造器
+		function Person(name, age) {
+			this.name = name;
+			this.age = age;
+		}
+
+		// 2. 创建一个构造器原型
+		Person.prototype.sayName = function() {
+			console.log(this.name)
+		};
+
+		// 3. 由构造器创建两个实例
+		var p1 = new Person('jizq', 28),
+			p2 = new Person('robot', 18);
+		p1.sayName(); // jizq
+		p2.sayName(); // robot
+		
+		// 4. 查看这两个实例之间的关系
+		console.log(p1.sayName == p2.sayName); // true
 	</script>
 </head>
 <body>

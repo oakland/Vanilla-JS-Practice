@@ -5,10 +5,12 @@
 	<title>4_class</title>
 	<script type="text/javascript">
 		class Person {
+			// 声明构造器
 			constructor(name, age) {
 				this.name = name;
 				this.age = age;
 			}
+			// 声明公有方法
 			sayName() {
 				console.log(this.name)
 			}
@@ -19,6 +21,9 @@
 		p2.sayName();
 
 		console.log(p1.sayName == p2.sayName);
+
+		// 关于如何使用 class 关键词创建公有属性，我没有找到相应的语法，在下面连接中的这篇文章中有一句话“很不幸的时ES6并没有提供对私有属性的语法支持，但是我们可以通过闭包来实现私有属性”，不知道是不是表示 class 还不能声明公有属性。
+		// http://blog.csdn.net/lihongxun945/article/details/48529371
 	</script>
 </head>
 <body>
