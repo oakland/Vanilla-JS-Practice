@@ -4,7 +4,9 @@
 
 ### 五、自己实现一个 OOP
 
-通过上面对 circles-master 的源码进行分析，我们其实可以看到要实现 OOP 其实很简单。我们就简单的来实现一个类似的功能。
+通过上面对 circles-master 的源码进行分析，我们其实可以看到要实现 OOP 其实很简单。我们就简单的来实现一个类似的效果。
+
+具体代码请查看 [3-OOPtest](https://github.com/oakland/Native-JS-Practice/tree/master/11-learnOOPfromCircles.js/3-OOPtest)
 
 OOPtest1.1.html 实现的其实将一个 Nums 的实例中的 innerHTML 属性放到对应的 HTML 元素下。
 而 1.2.html 则是为了让大家看清这个 OOP 产生的三个实例对象分别是什么，大家可以在控制台打开看这个数组中每个 Nums 实例都是什么。
