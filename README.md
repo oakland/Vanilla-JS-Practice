@@ -20,3 +20,11 @@ Some simple demos using native JS
 `http://htmlpreview.github.io/?https://github.com/oakland/Native-JS-Practice/blob/master/2-moveUpDownLeftRight/moveUpDownLeftRight.html`
 
 就可看到最终的页面效果。
+
+## 经典的案例和专题文章
+
+JS 在应用方面也有很多经典的案例和专题文章值得阅读，下面就是我在逐渐修建这个仓库的过程中找到的一些比较好的文章，值得阅读。
+
+[Animation](http://javascript.info/tutorial/animation)，详细讲解了 JS 实现动画的一些方式以及贝塞尔曲线的一些简单的实现。
+
+[setTimeout-setInterval](http://javascript.info/tutorial/settimeout-setinterval)
