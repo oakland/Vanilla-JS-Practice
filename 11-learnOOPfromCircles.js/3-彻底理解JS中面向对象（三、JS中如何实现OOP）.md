@@ -8,6 +8,8 @@
 
 这部分的内容需要配合本仓库中 [11-learnOOPfromCircles.js / 1-prototypeInJS](https://github.com/oakland/Native-JS-Practice/tree/master/11-learnOOPfromCircles.js/1-prototypeInJS) 的内容去理解。
 
+---
+
 #### 工厂模式
 
 查看 [1_factoryPattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/1_factoryPattern.html)，
@@ -24,11 +26,15 @@ var o = new Object();
 
 因为两个实例 sayName 完全相同，但是最后 person1.sayName == person2.sayName 的结果却是 false。可见只是简化了对象创造的方法，而并没有实现继承。
 
+---
+
 #### 构造器模式
 
 查看 [2_constructorPattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/2_constructorPattern.html)，
 
 可以看到 person1.sayName == person2.sayName 的结果依然是 false。其中的原因在之 [二、为什么要用 OOP](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/2-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BA%8C%E3%80%81%E5%9B%B0%E6%83%91%E9%87%8A%E7%96%91-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8OOP%EF%BC%89.md) 中有详细阐述，主要参考从从英文版《高程三》中摘录的内容，大家看完应该会有更深刻的理解。
+
+---
 
 #### 原型模式（应该重点查看的模式）
 
@@ -66,6 +72,8 @@ p1.constructor == p2.constructor == Person.prototype.constructor == Person
 
 也就是说这个实例对象是由谁 new 出来的，那么这个实例对象就会继承这个构造器的 prototype 属性中的属性和方法。
 
+---
+
 #### ES6 中的 class
 
 最后再说一下 ES6 中 class 实现原型继承。
@@ -80,3 +88,56 @@ p1.constructor == p2.constructor == Person.prototype.constructor == Person
 ES6 中 class 其实是原型继承的语法糖而已，所以没有什么可以讲解太多的，如果之前的内容你看懂了，那么ES6 中的 class 只是你创建原型的一种方式而已，并不是什么新的内容，原理还是前面提到的原型模式，只不过用了一个关键词 class。
 
 接下文，[4-彻底理解JS中面向对象（四-一个OOP的典型案例）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/4-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%9B%9B-%E4%B8%80%E4%B8%AAOOP%E7%9A%84%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B%EF%BC%89.md)
+
+---
+
+#### Object.create() 方式
+
+除了以上几张方式之外，还有一种不兼容旧版本浏览器的方式，就是使用 Object.create() 实现继承的方式。这种方式极其简单，被称为 pure prototypal inheritance，即 纯粹的原型继承 方式。以前，以前看到这个方式就觉得很麻烦，因为要牵扯到 JS 内置的 Object。但是实际这个方法非常简单，大家一看就明白。
+
+```
+var person = {
+    firstname: 'Default',
+    lastname: 'Default',
+    greet: function() {
+        console.log('Hi' + this.firstname);
+    }
+}
+
+var p1 = Object.create(person);
+console.log(p1)
+```
+将上面这段代码拷贝到浏览器控制台中回车，就会将 p1 打印出来，大家看 p1， 会发现 p1 是个空对象，就是没有任何的直接属性和方法，但是你打开 p1.__proto__ 会发现，这里面就有 `firstname`, `lastname`, 以及 'greet' 方法。什么意思？这表示 p1 的原型指向 person 这个普通的对象。也就是说再通过 Object.create() 创建一个对象，这个对象也会继承 person 的属性和方法。如果你想给原型上添加属性和方法，就只需要在 person 这个普通对象上添加键值对就可以了。
+
+```
+var p2 = Object.create(person);
+console.log(p1.greet === p2.greet); // true
+```
+
+那么有些同学会说，这种方法，没法给 p1 或者 p2 添加自己的独有属性了呀？确实，如果只从上面的代码来看的话确实无法添加了。其实但是如果我们想要给 p1 和 p2 添加自己独有的 firstname 和 lastname 怎么办呢？那么就只能手动添加了：
+
+```
+p1.firstname = 'John';
+p1.lastname = 'Doe';
+
+p2.firstname = 'Jane';
+p2.last.name = 'Doe';
+```
+
+通过这种方式添加的属性会覆盖原型中的默认属性，也就是 firstname:'Default' 和 lastname:'Default'。
+
+但是前面还讲了，这种方式不兼容旧的浏览器，旧的浏览器无法解析 Object.create() 方法。那么应该如何做到兼容呢？我们需要手动添加一个兼容的方法：
+
+```
+if(!Object.create) {
+    Object.create = function(o) {
+        if(arguments.length > 1) {
+            throw new Error('Object.create implementation only accepts the first
+            parameter.');
+        }     
+        function F() {};
+        F.prototype = o;
+        return new F();   
+    };
+}
+```

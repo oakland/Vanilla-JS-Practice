@@ -21,8 +21,8 @@
 其他还有不错的参考资料，比如：
 
 1. [JavaScript. The core.](http://dmitrysoshnikov.com/ecmascript/javascript-the-core/#a-prototype-chain)
-看过很多相关的文章，这篇是印象比较深的，后续还会继续补充比较好的资料。
+看过很多相关的文章，这篇是印象比较深的。
 2. (Introduction to Object-Oriented JavaScript)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript]
-3. 待补充
+3. 待补充...
 
 接下文，[2-彻底理解JS中面向对象（二、困惑释疑-为什么要用OOP）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/2-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BA%8C%E3%80%81%E5%9B%B0%E6%83%91%E9%87%8A%E7%96%91-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8OOP%EF%BC%89.md)
