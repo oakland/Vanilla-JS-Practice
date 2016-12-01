@@ -28,3 +28,9 @@ JS 在应用方面也有很多经典的案例和专题文章值得阅读，下�
 [Animation](http://javascript.info/tutorial/animation)，详细讲解了 JS 实现动画的一些方式以及贝塞尔曲线的一些简单的实现。
 
 [setTimeout-setInterval](http://javascript.info/tutorial/settimeout-setinterval)
+
+---
+
+## todos
+
+- js 判断回文
