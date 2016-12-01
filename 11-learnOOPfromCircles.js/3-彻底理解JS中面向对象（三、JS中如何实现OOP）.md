@@ -107,7 +107,7 @@ var person = {
 var p1 = Object.create(person);
 console.log(p1)
 ```
-将上面这段代码拷贝到浏览器控制台中回车，就会将 p1 打印出来，大家看 p1， 会发现 p1 是个空对象，就是没有任何的直接属性和方法，但是你打开 p1.__proto__ 会发现，这里面就有 `firstname`, `lastname`, 以及 'greet' 方法。什么意思？这表示 p1 的原型指向 person 这个普通的对象。也就是说再通过 Object.create() 创建一个对象，这个对象也会继承 person 的属性和方法。如果你想给原型上添加属性和方法，就只需要在 person 这个普通对象上添加键值对就可以了。
+将上面这段代码拷贝到浏览器控制台中回车，就会将 p1 打印出来，大家看 p1， 会发现 p1 是个空对象，就是没有任何的直接属性和方法，但是你打开 p1.\__proto__ 会发现，这里面就有 `firstname`, `lastname`, 以及 'greet' 方法。什么意思？这表示 p1 的原型指向 person 这个普通的对象。也就是说再通过 Object.create() 创建一个对象，这个对象也会继承 person 的属性和方法。如果你想给原型上添加属性和方法，就只需要在 person 这个普通对象上添加键值对就可以了。
 
 ```
 var p2 = Object.create(person);
