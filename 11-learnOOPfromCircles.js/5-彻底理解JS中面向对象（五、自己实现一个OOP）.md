@@ -16,4 +16,4 @@ OOPtest1.1.html 就是使用了和 circles-master 一样的方式创建 OOP。
 而 OOPtest1.2.html 则将创建的所有实例都打印出来，大家在浏览器打开，去控制台看这个打印出来的实例到底是什么。
 OOPtest1.3.html 则是对比了将方法定义在 constructor 中和在原型对象中的时候的区别，也是会将所有的实例打印出来，需要去控制台查看这些实例，和 OOPtest1.2.html 对比着看，可以搞清楚构造器和原型对象之间的很多关系。
 
-接下文，[6-彻底理解JS中面向对象（六、总结）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/6-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%89.md)
+接下文，[6-彻底理解JS中面向对象（六、如何实现子类继承父类-进阶）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/6-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%85%AD%E3%80%81%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%90%E7%B1%BB%E7%BB%A7%E6%89%BF%E7%88%B6%E7%B1%BB-%E8%BF%9B%E9%98%B6%EF%BC%89.md)
