@@ -59,9 +59,17 @@ JS 中 OOP 牵扯到相当多的内容和概念，例如 class, prototype, \__pr
 Though the constructor paradigm is useful, it is not without its faults. The major downside to constructors is that methods are created once for each instance. So, in the previous example, both person1 and person2 have a method called sayName(), but those methods are not the same instance of Function. Remember, functions are objects in ECMAScript, so every time a function is defined, it’s actually an object being instantiated. Logically, the constructor actually looks like this:
 
 ```
-function Person(name, age, job){ this.name = name;    this.age = age;    this.job = job;    this.sayName = new Function(“alert(this.name)”);  //logical equivalent}
+function Person(name, age, job){ this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = new Function(“alert(this.name)”);  //logical equivalent
+}
 ```
-"Thinking about the constructor in this manner makes it clear that each instance of Person getsits own instance of Function that happens to display the name property. To be clear, creating a function in this manner is different with regard to scope chains and identifier resolution, but the mechanics of creating a new instance of Function remain the same. So, functions of the same name on different instances are not equivalent, as the following code proves:```alert(person1.sayName == person2.sayName); //false
+"Thinking about the constructor in this manner makes it clear that each instance of Person gets
+its own instance of Function that happens to display the name property. To be clear, creating a function in this manner is different with regard to scope chains and identifier resolution, but the mechanics of creating a new instance of Function remain the same. So, functions of the same name on different instances are not equivalent, as the following code proves:
+
+```
+alert(person1.sayName == person2.sayName); //false
 ```
 It doesn’t make sense to have two instances of Function that do the same thing, especially when the this object makes it possible to avoid binding functions to particular objects until runtime...
 
@@ -96,11 +104,14 @@ var o = new Object();
 
 这个是要详细说明的模式，我会摘录大段《高程三》中的内容，并做精简的概要，让大家能更明确地理解原型模式。
 
-Each function is created with a prototype property, which is an object containing properties and methods that should be available to instances of a particular reference type. This object is literallya prototype for the object to be created once the constructor is called. The benefit of using the prototype is that all of its properties and methods are shared among object instances. Instead of assigning object information in the constructor, they can be assigned directly to the prototype, as in this example:
+Each function is created with a prototype property, which is an object containing properties and methods that should be available to instances of a particular reference type. This object is literally
+a prototype for the object to be created once the constructor is called. The benefit of using the prototype is that all of its properties and methods are shared among object instances. Instead of assigning object information in the constructor, they can be assigned directly to the prototype, as in this example:
 
 上面这段话摘录自《高程三》对于原型模式的第一段话，这段话非常经典，而且就已经很明确地阐述了原型之间的关系了。
-每个**函数**都有一个 prototype 属性，记住，只有函数才有，对象没有，而每个对象都会拥有的，是一个 \__proto__ 属性，后面会对 \__proto__ 属性详细讲解。其实因为在 JS 中，函数也是对象，所以，函数也会拥有一个 \__proto__ 属性。也就是说函数会同时拥有 prototype 和 \__proto__ 属性，而对象只有 \__proot__ 属性。
-构造器作为一个普通函数，也会拥有一个 prototype 的属性。这个 prototype 属性是个对象，这个对象会拥有很多属性和方法，而一旦使用 new 操作符调用构造器函数的时候，所有的实例就会拥有构造器函数的 prototype 属性上的所有属性和方法，这样就实现了原型继承。怎么样，很简单吧？也就是在 [3_prototypePattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/3_prototypePattern.html) 中，p1.sayName 和 p2.sayName 是同一个 sayName。当通过 `Person.prototype` 来修改一个属性的时候，所有的实例都会受到影响。Unlike the constructor pattern, the properties and methods are all shared among instances, so person1 and person2 are both accessing the same set of properties and the same sayName() function. 
+每个**函数**都有一个 prototype 属性，记住，只有函数才有，对象没有，而每个对象都会拥有的，是一个 \__proto__ 属性，后面会对 \__proto__ 属性详细讲解。其实因为在 JS 中，函数也是对象，所以，函数也会拥有一个 \__proto__ 属性。也就是说函数会同时拥有 prototype 和 \__proto__ 属性，而对象只有 \__proot__ 属性。
+构造器作为一个普通函数，也会拥有一个 prototype 的属性。这个 prototype 属性是个对象，这个对象会拥有很多属性和方法，而一旦使用 new 操作符调用构造器函数的时候，所有的实例就会拥有构造器函数的 prototype 属性上的所有属性和方法，这样就实现了原型继承。怎么样，很简单吧？也就是在 [3_prototypePattern.html](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/1-prototypeInJS/3_prototypePattern.html) 中，p1.sayName 和 p2.sayName 是同一个 sayName。当通过 `Person.prototype` 来修改一个属性的时候，所有的实例都会受到影响。
+
+Unlike the constructor pattern, the properties and methods are all shared among instances, so person1 and person2 are both accessing the same set of properties and the same sayName() function. 
 
 上面这段英文是《高程三》对于原型继承的解释。
 
@@ -172,7 +183,178 @@ OOPtest1.1.html 实现的其实将一个 Nums 的实例中的 innerHTML 属性�
 而 1.2.html 则是为了让大家看清这个 OOP 产生的三个实例对象分别是什么，大家可以在控制台打开看这个数组中每个 Nums 实例都是什么。
 而 1.3.html 则是为了让大家看清楚在构造器中定义方法和在prototype 中定义方法的不同之处，让大家更加明白 OOP 为什么会节约内存空间，提高代码的复用性。
 
-### 六、总结
+### 六、如何实现子类继承父类（进阶）
+
+这部分内容是作为进阶了解的，如果觉得以上的内容需要消化一段时间的话，可以暂时不用看这部分的内容。
+
+上面我们主要讲解了如何创建一个 class，然后根据这个 class 来创建很多 instance。所有的 instance 都是继承了这个 class 的一些属性和方法。如果打个比方的话，这个 class 就像是一个模具，new 一个 instance 出来，就像是通过工厂车间的模具浇铸出来一个一个的产品，这些产品全都一模一样。然后我们自己再把这个产品喷涂不同的色彩或者贴上不同的标签，让他们有自己独特的特点，但是他们的本质都是一样的。
+
+这个时候还有另外一个问题，我们如何通过一个已有的父类(SuperClass)来创建一个子类(SubClass)呢？比如，我们已经有一个 Father 的类，如果实现一个 Child 的类呢？这个 Child 类除了继承 Father 类的属性和方法之外，还会有一些自己独特的属性和方法，甚至可能会覆盖一些 Father 类的属性或者方法。然后通过 var child1 = new Child() 来创建一个 child1，ta 会继承 Child 类的属性和方法，也会继承一些 Father 类的属性和方法。
+
+要想实现这个目标，我们主要要关注两个点，一个是 call 方法的调用，一个是 Object.create() 方法的使用。这个过程中还牵扯到我们需要理解构造函数 new 一个实例出来的时候的这个过程到底是如何的？
+
+假设，我们现在有一个 Father 类。
+
+```javascript
+function Father(name, age) {
+    this.name = name;
+    this.age = age;
+}
+Father.prototype.code = function() {
+    console.log('coding...');
+}
+Father.prototype.greeting = function() {
+    console.log('Hi, I\'m Mr ' + this.name);
+}
+```
+
+现在我们想实现一个 Child 类，也有一个 code 方法和 greeting 方法，我们当然也可以像上面一样，给 Child.prototype 添加一个 code 和 greeting 的方法。但是这不符合 DRY 原则，既然 Father 已经有一个 code 方法了，我们为什么不从 Father 类来继承呢？这就是为什么要实现子类继承父类的情况。子类继承父类牵扯到 Object.create() 这个方法。其次，我们知道 call 方法可以改变 this 的指向，所以，实现 name, age 传参可以通过 call 方法来实现。
+
+我们一个一个来进行说明，先说 call 方法。
+
+```javascript
+function Child(name, age, toys) {
+    Father.call(this, name, age); // 调用父类的构造函数
+    this.toys = toys; // 添加自己独有的属性
+}
+```
+
+我们知道 new 的过程，其实就是工厂模式的一种简化。就是说 new 的过程是，先创建一个实例，然后所有的 this 都指向这个实例，也就是说 this.name = name 也好，this.age = age 也好，都是在给这个实例添加属性，添加完所有的属性之后，再将这个实例 return 出去。我们用 JS 语言表现出来，其实就是下面这个样子。
+
+```javascript
+function Father(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+var f1 = new Father('jizq', 29);
+
+// 下面是如何实现 f1 的过程
+var instance;
+instance.name = name; // Father 类中会用 this 这个抽象的代词来指代所有的实例，当具体生成实例的时候，就会指向具体的实例。
+instance.age = age; // 同理
+return instance; // 相当于 f1 = instance，就是把这个生成的实例赋值给 f1
+```
+
+理解了上面这个过程，我们来说说 Father.call(this, name, age)。我们知道 call 可以改变 this 的指向，因此此时 this 就会指向 Child 的实例，也就是说，Father.call(this, name, age)中执行 this.name = name 的时候，这里的 this 指的就是 Child 实例。所以这个过程就是给 Child 实例添加 name 和 age 属性的过程。
+
+this.toys = toys 则是给 Child 实例添加自己独有的属性，这个不用多讲。
+
+接着来看一下如何让 Child.prototype 继承 Father.prototype 中的属性和方法呢？我们需要用到 Object.create() 方法。
+
+```javascript
+Child.prototype = Object.create(Father.prototype); // 相当于 Child.prototype.__proto__ = Father.prototype
+```
+
+Object.create() 方法返回一个对象，这个对象的原型就是这个方法的参数。例如：
+
+```javascript
+var person = {
+    name: 'jizq',
+    sayHi: function() {
+        console.log('Hi!');        
+    }
+}
+var p1 = Object.create(person); // 相当于 p1.__proto__ = person
+console.log(p1); // 可以把 p1 打印出来在控制台看看原型链关系
+```
+
+所以说实例会继承 Child.prototype 的属性和方法，而 Child.prototype 又会继承 Father.prototype 的属性和方法。这样，就相当于实例会继承 Father.prototype 的属性和方法了。但是这里唯一有一个需要注意的地方，就是这个时候打印实例的 constructor 返回的是 Father，是因为整个 Child.prototype 都被 Father.prototype 替换了，所以自然就会指向 Father，我们需要把 constructor 修正一下。
+
+```javascript
+Child.prototype.constructor = Child;
+```
+最后，Father 的 greeting 方法不适合 Child，我们需要给 Child 子类添加自己的 greeting 方法。
+
+```javascript
+Child.prototype.greeting = function() {
+    console.log('Hi, I\'m little ' + this.name);
+};
+```
+
+OK，到这里就大功告成了。我们把所有的内容都写在一起。
+
+```javascript
+function Father(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+Father.prototype.code = function() {
+    console.log('coding...');
+};
+
+Father.prototype.greeting = function() {
+    console.log('Hi, I\'m Mr ' + this.name);
+};
+
+function Child(name, age, toys) {
+    Father.call(this, name, age);
+    this.toys = toys;
+}
+
+Child.prototype = Object.create(Father.prototype);
+
+Child.prototype.constructor = Child;
+Child.prototype.greeting = function() {
+    console.log('Hi, I'\m little ' + this.name);
+}
+
+var c = new Child('jr', 1, ['NICIbear', 'IKEAdog']);
+
+console.log(c);
+```
+
+MDN 中 Object.create() 的文章中也是通过上述的方式实现了子类继承父类，Rectangle 继承 Shape，值得阅读，链接如下。
+https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+
+### 七、如何实现子类继承多个父类（进阶）
+
+同样，这部分内容如果在以上内容没有消化的时候，不建议阅读。
+在第六部分中，我们实现了子类继承父类，那如果有多个父类需要继承怎么办呢？比如，我们 Child 子类除了继承 Father 父类之外，还要继承 Mother 父类怎么办？我们的 Mother 父类如下：
+
+```javascript
+function Mother(eyes, health) {
+    this.eyes = eyes;
+    this.health = health;
+}
+
+Mother.prototype.cook = function() {
+    console.log('cooking');
+};
+```
+
+这个过程中牵扯到 Object.assign() 方法，就是如何给一个对象添加其他对象的属性的过程。我们先把代码写出来，然后一一来分析：
+
+```javascript
+function Child(name, age, eyes, health, toys) {
+    Father.call(this, name, age);
+    Mother.call(this, eyes, health);
+    this.toys = toys;
+}
+
+Child.prototype = Object.create(Father.prototype); // Child.prototype.__proto__ = Father.prototype
+
+Object.assign(Child.prototype, Mother.prototype); // Child.prototype = Child.prototype + Mother.prototype
+
+Child.prototype.constructor = Child;
+Child.prototype.greeting = function() {
+    console.log('Hi, I\'m little ' + this.name);
+}
+
+var child = new Child('jr', 1, 'big eyes', 100, ['NICIbear', 'IKEAdog']);
+
+console.log(child); // 可以看到 child 的原型链上会同时有来自 Mother 的 cooking 和来自 Father 的 coding，虽然也会有来自 Father 的 greeting，但是也有自己独有的 greeting，只不过自己独有的 greeting 会覆盖 Father 的 greeting。
+/*
+把上面的代码放到控制台中打印出来，仔细看一下，你会发现 cooking 和 coding 在原型链的位置中是不同的。这是因为 Object.create() 方法是给对象原型上添加属性，而 Object.assign() 是给对象本身添加属性。
+其实 Object.create() 方法主要是在 JS 中用来执行和继承有关的事情。而 Object.assign 则是改造对象本身。这个方法也特别有用，可以用来复制对象，可以用来给对象添加其他对象的属性，甚至可以用来合并对象等等。想知道这个方法的用法，请看 MDN 的文章：
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+*/
+```
+
+我们来详细解读一下上面的代码。上述代码和之前只继承 Father 父类的最大区别有两点。第一点就是在构造函数中增加了 Mother.call()，这个我相信如果大家理解 Father.call() 的话，也不需要更多的解释了。还有一点区别在于 Object.assign() 这个方法。这个方法会将第二个参数以及之后的所有参数的可枚举属性都添加到第一个对象上面，同时返回第一个对象。正如我在注释表达的一样，就是给 Child.prototype 上添加了所有 Mother.prototype 的属性。所以 Mother.prototype 上的属性和方法 和 Father.prototype 的属性和方法不在同一个层级的原型上。尽管看起来这个实现了同时继承两个父类。所以这个就是实现继承多个父类的方法。
+
+### 八、总结
 
 最后总结一下整篇文章中最重要的内容：
 
@@ -208,3 +390,4 @@ OOPtest1.1.html 实现的其实将一个 Nums 的实例中的 innerHTML 属性�
 
 
 [^1]: 《JS高级程序设计-第三版》英文版，上面提到的页数也都是指的英文版里的页数。
+[^2]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create

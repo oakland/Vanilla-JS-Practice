@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script type="text/javascript">
+    // 下面是关于数组的一些基本操作，例如去重、找最大最小值、还有洗牌等等。
+
     var arr = ["a", "b", "e", "e", "a", "d"];
 
     function transformToDic(array) {
@@ -65,13 +67,21 @@
         return min;
     }
 
+    // 找最大最小值还有一种递归的方式
+    // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
+    function max(arr) {
+        return arr.reduce(function(p, n) {
+            return p > n ? p : n
+        })
+    }
+
     // 根据现有数组获取一个随机数组
     function shuffle(arr) {
         //获取 arr.length，获取一个 0-arr.length 之间的随机数，然后将这个随机的 index 和对应的值 push 到新的 array 中，最后返回这个新的 array
         var newArr = [];
         //传入一个参数，返回一个 0 到该参数之间的随机数
         function transRandomInde(num) {
-            return Math.floor(Math.random() * len);
+            return Math.floor(Math.random() * num);
         }
         var originLength = arr.length
         for (var i = 0; i < originLength; i++) {
