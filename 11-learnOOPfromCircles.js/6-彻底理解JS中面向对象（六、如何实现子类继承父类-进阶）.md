@@ -38,7 +38,7 @@ function Child(name, age, toys) {
 }
 ```
 
-我们知道 new 的过程，其实就是工厂模式的一种简化。就是说 new 的过程是，先创建一个实例，然后所有的 this 都指向这个实例，也就是说 this.name = name 也好，this.age = age 也好，都是在给这个实例添加属性，添加完所有的属性之后，再将这个实例 return 出去。我们用 JS 语言表现出来，其实就是下面这个样子。
+我们知道 new 的过程，其实就是工厂模式的一种简化。就是说 new 的过程是，先创建一个实例，然后将给实例添加一个 __proto__ 属性，指向构造器的 prototype，也就是说是先给这个实例添加所有原型上的属性和方法，然后所有的 this 都指向这个实例，也就是说 this.name = name 也好，this.age = age 也好，都是在给这个实例添加属性，添加完所有的属性之后，再将这个实例 return 出去。我们用 JS 语言表现出来，其实就是下面这个样子。
 
 ```javascript
 function Father(name, age) {
@@ -49,9 +49,10 @@ function Father(name, age) {
 var f1 = new Father('jizq', 29);
 
 // 下面是如何实现 f1 的过程
-var instance;
+var instance = null;
+instance.__proto__ = Father.prototype; // 第一步就是先给这个实例添加所有原型上的属性和方法。
 instance.name = name; // Father 类中会用 this 这个抽象的代词来指代所有的实例，当具体生成实例的时候，就会指向具体的实例。
-instance.age = age; // 同理
+instance.age = age; // 同上
 return instance; // 相当于 f1 = instance，就是把这个生成的实例赋值给 f1
 ```
 
@@ -127,5 +128,16 @@ console.log(c);
 
 最后，MDN 中 Object.create() 的文章中也是通过上述的方式实现了子类继承父类，让 Rectangle 继承 Shape，值得阅读，链接如下。
 https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+这篇文章中后面 polyfill 前的例子中有一个，特别能说明 Object.create() 到底在干一件什么事情：
+
+```javascript
+function Constructor() {}
+o = new Constructor();
+// is equivalent to:
+o = Object.create(Constructor.prototype);
+// Of course, if there is actual initialization code
+// in the Constructor function, 
+// the Object.create() cannot reflect it
+```
 
 接下文，[7-彻底理解JS中面向对象（七、如何实现子类继承多个父类-进阶）](https://github.com/oakland/Native-JS-Practice/blob/master/11-learnOOPfromCircles.js/7-%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3JS%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%B8%83%E3%80%81%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%90%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%A4%9A%E4%B8%AA%E7%88%B6%E7%B1%BB-%E8%BF%9B%E9%98%B6%EF%BC%89.md)
