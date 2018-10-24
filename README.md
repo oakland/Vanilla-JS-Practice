@@ -1,4 +1,4 @@
-# Native-JS-Practice
+# Vanilla-JS-Practice
 Some simple demos using native JS
 
 ## 本仓库的目的
