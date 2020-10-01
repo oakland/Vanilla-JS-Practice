@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+ 
+    background-image: url('2000.jpg');
+    
+}
+#heading{
+    margin-left: 25%;
+    margin-top: 5%;
+    color : #d4e872;
+    font-size: 500%;
+}
+
+.keys{
+    display: flex;
+    padding-left: 1%;
+    padding-top: 12%;
+    color: white;
+}
+.key{
+     border: 5px solid black;
+     padding: 1% ; 
+     margin: 0.5% ;
+     border-radius: 10px;
+     width: 100%;
+      transition: 0.07s; /*itne duration tak isme koi v changes hota rahega */
+}
+
+.beat{
+    font-size: 300%;
+    text-align: center;
+}
+
+.keyname{
+    font-size: 100%;
+    text-align: center;
+    color : gold;
+}
+ 
+/*added an class playing which will be added using JavaScript during different interval*/
+
+.playing{
+    transform: scale(1.1);
+    border-color: #ffc600;
+    box-shadow: 0 0 10px #ffc600;
+}
+
